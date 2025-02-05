@@ -1,20 +1,25 @@
 import { useEffect, useState } from 'react';
 
 const ProfilePicture = ({ user, style, alt = 'Profile Picture' }) => {
-    const [imageSrc, setImageSrc] = useState('/placeholder-profile.png');
+    const placeholder = 'storage/images/profilepicture/placeholder-profile.jpg';
+    const [imageSrc, setImageSrc] = useState(placeholder);
 
     useEffect(() => {
-        if (user?.slug) {
-            axios
-                .get(`${user.slug}/profile-picture`)
-                .then(({ data }) =>
-                    setImageSrc(
-                        data.profile_picture_url || '/placeholder-profile.png',
-                    ),
-                )
-                .catch(() => setImageSrc('/placeholder-profile.png'));
-        }
-    }, [user]);
+        if (!user?.slug) return;
+
+        const fetchProfilePicture = async () => {
+            try {
+                const { data } = await axios.get(
+                    `${user.slug}/profile-picture`,
+                );
+                setImageSrc(data.profile_picture_url || placeholder);
+            } catch {
+                setImageSrc(placeholder);
+            }
+        };
+
+        fetchProfilePicture();
+    }, [user?.slug]);
 
     return (
         <img src={imageSrc} alt={alt} className="h-full w-full" style={style} />

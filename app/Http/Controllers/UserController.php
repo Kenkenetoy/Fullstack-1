@@ -72,67 +72,60 @@ class UserController extends Controller
         return response()->json(['profile_picture' => $imageName]);
     }
 
-    public function updateBackgroundPicture(Request $request)
-    {
-        $request->validate([
-            'background_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
-
-        $user = auth()->user();
-        $image = $request->file('background_picture');
-        $originalName = $image->getClientOriginalName();
-
-        // Ensure the uploaded file does not overwrite the placeholder
-        $forbiddenNames = ['placeholder-background.jpg'];
-        if (in_array($originalName, $forbiddenNames)) {
-            return response()->json(['error' => 'Invalid file name. Please rename your file and try again.'], 400);
-        }
-
-        // Generate a unique filename
-        $imageName = time() . '_' . $originalName;
-
-        // Delete old background picture if exists (except placeholder)
-        if ($user->background_picture && !in_array($user->background_picture, $forbiddenNames)) {
-            Storage::disk('public')->delete('images/backgrounds/' . $user->background_picture);
-        }
-
-        // Save new background picture
-        $image->storeAs('images/backgrounds', $imageName, 'public');
-        $user->update(['background_picture' => $imageName]);
-
-        return response()->json(['background_picture' => $imageName]);
-    }
-
-    public function getProfilePicture($slug)
+        public function getProfilePicture($slug)
     {
         $user = User::where('slug', $slug)->first();
-
-        // If no user is found, return the placeholder image
-        if (!$user) {
-            return response()->json([
-                'profile_picture_url' => asset('storage/images/profilepicture/placeholder-profile.jpg')
-            ]);
-        }
 
         return response()->json([
             'profile_picture_url' => asset('storage/images/profilepicture/' . ($user->profile_picture ?? 'placeholder-profile.jpg'))
         ]);
     }
 
-    public function getBackgroundPicture($slug)
-    {
-        $user = User::where('slug', $slug)->first();
+    // public function updateBackgroundPicture(Request $request)
+    // {
+    //     $request->validate([
+    //         'background_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+    //     ]);
 
-        // If user not found, return the placeholder background image
-        if (!$user) {
-            return response()->json([
-                'background_picture_url' => asset('storage/images/backgrounds/placeholder-background.jpg')
-            ]);
-        }
+    //     $user = auth()->user();
+    //     $image = $request->file('background_picture');
+    //     $originalName = $image->getClientOriginalName();
 
-        return response()->json([
-            'background_picture_url' => asset('storage/images/backgrounds/' . ($user->background_picture ?? 'placeholder-background.jpg'))
-        ]);
-    }
+    //     // Ensure the uploaded file does not overwrite the placeholder
+    //     $forbiddenNames = ['placeholder-background.jpg'];
+    //     if (in_array($originalName, $forbiddenNames)) {
+    //         return response()->json(['error' => 'Invalid file name. Please rename your file and try again.'], 400);
+    //     }
+
+    //     // Generate a unique filename
+    //     $imageName = time() . '_' . $originalName;
+
+    //     // Delete old background picture if exists (except placeholder)
+    //     if ($user->background_picture && !in_array($user->background_picture, $forbiddenNames)) {
+    //         Storage::disk('public')->delete('images/backgrounds/' . $user->background_picture);
+    //     }
+
+    //     // Save new background picture
+    //     $image->storeAs('images/backgrounds', $imageName, 'public');
+    //     $user->update(['background_picture' => $imageName]);
+
+    //     return response()->json(['background_picture' => $imageName]);
+    // }
+
+    // public function getBackgroundPicture($slug)
+    // {
+    //     $user = User::where('slug', $slug)->first();
+
+    //     // If user not found, return the placeholder background image
+    //     if (!$user) {
+    //         return response()->json([
+    //             'background_picture_url' => asset('storage/images/backgrounds/placeholder-background.jpg')
+    //         ]);
+    //     }
+
+    //     return response()->json([
+    //         'background_picture_url' => asset('storage/images/backgrounds/' . ($user->background_picture ?? 'placeholder-background.jpg'))
+    //     ]);
+    // }
 
 }
