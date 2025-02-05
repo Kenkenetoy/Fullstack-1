@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -51,6 +52,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Profile Picture Management
     Route::post('/user/profile-picture', [UserController::class, 'updateProfilePicture']);
+
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 
 });
 
