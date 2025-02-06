@@ -7,13 +7,21 @@ export default function ChatInput() {
 
     const sendMessage = (e) => {
         e.preventDefault();
+
         if (!data.message.trim()) return;
 
         setLoading(true);
+
         post('/messages', {
-            onSuccess: () => {
-                reset('message');
-                setLoading(false);
+            onSuccess: (response) => {
+                // Handle the response properly and update your UI
+                console.log(response);
+                reset('message'); // Reset form field after success
+                setLoading(false); // Stop loading
+            },
+            onError: (error) => {
+                console.error(error);
+                setLoading(false); // Stop loading on error
             },
         });
     };

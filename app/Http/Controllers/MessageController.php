@@ -6,6 +6,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Events\MessageSent;
 
 class MessageController extends Controller
 {
@@ -18,15 +19,16 @@ class MessageController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'message' => 'required|string|max:500',
-        ]);
+        $request->validate(['message' => 'required|string']);
 
         $message = Message::create([
             'user_id' => auth()->id(),
-            'message' => $validated['message'],
+            'message' => $request->message,
         ]);
 
-        return back();
+        // Broadcast the message
+        broadcast(new MessageSent($message))->toOthers();
+
+        return response()->json($message);
     }
 }
