@@ -53,7 +53,8 @@ Route::middleware(['auth'])->group(function () {
     // Profile Picture Management
     Route::post('/user/profile-picture', [UserController::class, 'updateProfilePicture']);
 
-    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+    Route::get('/chat', [MessageController::class, 'index'])->name('chat');
+    Route::post('/messages', [MessageController::class, 'store']);
 
 });
 

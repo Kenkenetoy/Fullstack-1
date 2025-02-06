@@ -22,13 +22,13 @@ export default function Layout({ children, someProp }) {
 
     return (
         <>
-            <header className="sticky top-0 z-30 uppercase text-gray-700 shadow-lg">
+            <header className="sticky top-0 z-30 text-gray-700 uppercase shadow-lg">
                 {/* Red Navbar */}
                 <div className="relative z-10 text-neutral-100">
-                    <div className="flex h-10 items-center justify-start bg-neutral lg:justify-center">
+                    <div className="flex items-center justify-start h-10 bg-neutral lg:justify-center">
                         <Link
                             href="/"
-                            className="absolute left-1/2 z-20 max-h-16 max-w-16 -translate-x-1/2 transform lg:max-h-28 lg:max-w-28" // Center the logo
+                            className="absolute z-20 transform -translate-x-1/2 left-1/2 max-h-16 max-w-16 lg:max-h-28 lg:max-w-28" // Center the logo
                         >
                             <ApplicationLogo hasShadow={true} />
                         </Link>
@@ -45,8 +45,8 @@ export default function Layout({ children, someProp }) {
                                 <div className="tham-inner bg-base-200" />
                             </div>
                         </div>
-                        <div className="hidden items-center justify-center lg:flex lg:gap-72">
-                            <ul className="menu menu-horizontal w-full flex-nowrap justify-end p-0">
+                        <div className="items-center justify-center hidden lg:flex lg:gap-72">
+                            <ul className="justify-end w-full p-0 menu menu-horizontal flex-nowrap">
                                 <li>
                                     <Link href={route('dashboard')}>News</Link>
                                 </li>
@@ -59,7 +59,7 @@ export default function Layout({ children, someProp }) {
                                 <li>
                                     <details>
                                         <summary>Info for</summary>
-                                        <ul className="rounded-t-none bg-base-100 p-2 text-black">
+                                        <ul className="p-2 text-black rounded-t-none bg-base-100">
                                             <li>
                                                 <Link
                                                     href={route('logout')}
@@ -73,18 +73,16 @@ export default function Layout({ children, someProp }) {
                                     </details>
                                 </li>
                             </ul>
-                            <ul className="menu menu-horizontal h-full w-full flex-nowrap p-0">
+                            <ul className="w-full h-full p-0 menu menu-horizontal flex-nowrap">
                                 <li>
                                     <Link href={route('dashboard')}>Visit</Link>
                                 </li>
                                 <li>
-                                    <Link href={route('dashboard')}>
-                                        Contact Us
-                                    </Link>
+                                    <Link href={route('chat')}>Chat</Link>
                                 </li>
                                 <li className="relative">
                                     <div
-                                        className="flex cursor-pointer items-center p-2"
+                                        className="flex items-center p-2 cursor-pointer"
                                         onClick={toggleDropdown}
                                     >
                                         <svg
@@ -93,7 +91,7 @@ export default function Layout({ children, someProp }) {
                                             viewBox="0 0 24 24"
                                             strokeWidth={1.5}
                                             stroke="currentColor"
-                                            className="h-5 w-5"
+                                            className="w-5 h-5"
                                         >
                                             <path
                                                 strokeLinecap="round"
@@ -106,7 +104,7 @@ export default function Layout({ children, someProp }) {
 
                                 {user ? (
                                     <>
-                                        <li className="dropdown dropdown-end h-1">
+                                        <li className="h-1 dropdown dropdown-end">
                                             <div
                                                 tabIndex={0}
                                                 role="button"
@@ -122,7 +120,7 @@ export default function Layout({ children, someProp }) {
                                                 tabIndex={0}
                                                 className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
                                             >
-                                                <span className="rounded-md px-4 py-3 font-bold capitalize text-base-content">
+                                                <span className="px-4 py-3 font-bold capitalize rounded-md text-base-content">
                                                     {`${user.first_name ?? ''} ${user.middle_name ? user.middle_name + ' ' : ''}${user.last_name ?? ''}`.trim() ||
                                                         'User'}
                                                 </span>
@@ -131,7 +129,7 @@ export default function Layout({ children, someProp }) {
                                                         href={route(
                                                             'dashboard',
                                                         )}
-                                                        className="rounded-md px-3 capitalize text-base-content"
+                                                        className="px-3 capitalize rounded-md text-base-content"
                                                     >
                                                         Dashboard
                                                     </Link>
@@ -142,7 +140,7 @@ export default function Layout({ children, someProp }) {
                                                             'profile.view',
                                                             { slug: user.slug },
                                                         )}
-                                                        className="rounded-md px-3 capitalize text-base-content"
+                                                        className="px-3 capitalize rounded-md text-base-content"
                                                     >
                                                         Profile
                                                     </Link>
@@ -152,7 +150,7 @@ export default function Layout({ children, someProp }) {
                                                         href={route('logout')}
                                                         method="post"
                                                         as="button"
-                                                        className="rounded-md px-3 capitalize text-base-content"
+                                                        className="px-3 capitalize rounded-md text-base-content"
                                                     >
                                                         Log Out
                                                     </Link>
@@ -175,9 +173,9 @@ export default function Layout({ children, someProp }) {
                 </div>
 
                 {/* White Navbar */}
-                <div className="z-5 relative hidden lg:block">
-                    <div className="flex h-16 items-center justify-center gap-40 overflow-x-hidden bg-base-100">
-                        <ul className="menu menu-horizontal w-full flex-nowrap justify-end p-0 text-lg">
+                <div className="relative hidden z-5 lg:block">
+                    <div className="flex items-center justify-center h-16 gap-40 overflow-x-hidden bg-base-100">
+                        <ul className="justify-end w-full p-0 text-lg menu menu-horizontal flex-nowrap">
                             <li>
                                 <Link href={route('dashboard')}>
                                     Education & research
@@ -189,7 +187,7 @@ export default function Layout({ children, someProp }) {
                                 </Link>
                             </li>
                         </ul>
-                        <ul className="menu menu-horizontal w-full flex-nowrap p-0 text-lg">
+                        <ul className="w-full p-0 text-lg menu menu-horizontal flex-nowrap">
                             <li>
                                 <Link href={route('dashboard')}>
                                     life at liverpool
@@ -209,15 +207,15 @@ export default function Layout({ children, someProp }) {
                     <>
                         {/* Dark Background Overlay */}
                         <div
-                            className="z-1 fixed inset-0 bg-black bg-opacity-50"
+                            className="fixed inset-0 bg-black bg-opacity-50 z-1"
                             onClick={toggleDropdown} // Click outside to close
                         ></div>
 
-                        <div className="z-6 fixed w-full space-y-8 bg-base-100 p-12 shadow-lg lg:top-10">
+                        <div className="fixed w-full p-12 space-y-8 shadow-lg z-6 bg-base-100 lg:top-10">
                             {/* Modal */}
-                            <div className="m-auto flex flex-col gap-8 lg:w-1/2">
+                            <div className="flex flex-col gap-8 m-auto lg:w-1/2">
                                 <button
-                                    className="btn btn-circle btn-ghost btn-sm hidden self-end lg:block"
+                                    className="self-end hidden btn btn-circle btn-ghost btn-sm lg:block"
                                     onClick={toggleDropdown}
                                 >
                                     ✕
