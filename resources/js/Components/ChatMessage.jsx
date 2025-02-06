@@ -5,15 +5,10 @@ export default function ChatMessage({ message, auth }) {
 
     return (
         <div className={`chat ${isOwnMessage ? 'chat-end' : 'chat-start'}`}>
-            <div className="flex items-center space-x-4">
-                {!isOwnMessage && (
-                    <div className="h-12 overflow-hidden rounded-full avatar">
-                        <ProfilePicture user={message.user.slug} />
-                    </div>
-                )}
+            <div className="flex items-end space-x-6">
                 <div className="chat-bubble">{message.message}</div>
                 {isOwnMessage && (
-                    <div className="h-12 overflow-hidden rounded-full avatar">
+                    <div className="h-10 -mb-4 overflow-hidden rounded-full avatar">
                         <ProfilePicture user={message.user.slug} />
                     </div>
                 )}
