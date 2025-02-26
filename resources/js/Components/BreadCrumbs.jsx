@@ -7,7 +7,7 @@ const Breadcrumbs = () => {
     let path = '';
 
     return (
-        <nav className="border-b-2 p-4">
+        <nav className="p-4 border-b-2">
             <ul className="flex items-center space-x-2 text-sm">
                 {/* Home link */}
                 <li>
